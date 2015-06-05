@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Login - Deu vontade de pizza!</title>
+	<ui:include src="/cabecalho.xhtml" />
+</h:head>
+<h:body>
+	<form id="login" method="post" action="#{request.contextPath}/j_spring_security_check">
+		<br />
+		<div style="width: 50%">
+			<p:fieldset legend="Login">
+				<table style="width: 100%">
+					<tr>
+						<td>Login</td>
+						<td><input type="text" name="j_username" maxlength="25" style="width: 70%" /></td>
+					</tr>
+					<tr>
+						<td>Senha</td>
+						<td><input type="password" name="j_password" maxlength="25" style="width: 70%" /></td>
+					</tr>
+					<tr>
+						<td align="right"><input type="checkbox"
+							name="_spring_security_remember_me" /></td>
+						<td>Entrar automaticamente</td>
+					</tr>
+					<tr align="right">
+						<td></td>
+						<td><input type="submit" value="Entrar" /></td>
+						<td><h:commandLink style="width: 50%" action="publico/usuario" value="Ainda não é cadastrado? Clique aqui." /> </td>
+					</tr>
+				</table>
+				<script>
+					document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+				</script>
+			</p:fieldset>
+		</div>
+	</form>
+	<h:panelGroup rendered="#{!empty param.login_error}">
+		<br />
+		<span style="font-color: red">Erro ao efetuar o login.</span>
+		<br />
+		<br />
+		Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+	</h:panelGroup>
+</h:body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Painel de controle - Deu vontade de pizza!</title>
+	<ui:include src="/cabecalho.xhtml" />
+</h:head>
+<body>
+	<p:panel position="center" header="Painel de controle	">
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Manutenção">
+					<p:menuitem value="Usuário" action="/publico/usuario.jsf?faces-redirect=true" />
+					<p:menuitem value="Cardápio" url="/restrito/cardapio.jsf?faces-redirect=true" />
+				</p:submenu>
+					<f:facet name="options">
+						<p:menuitem> <p:commandButton value="Logout" action="#{usuarioLogadoBean.logout()}" /> </p:menuitem>
+					</f:facet>
+			</p:menubar>
+		</h:form>
+	</p:panel>
+</body>
+</html>

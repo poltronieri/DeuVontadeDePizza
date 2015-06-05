@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	<title>Cadastro de usuário - Deu vontade de pizza!</title>
+	<!-- <h:outputStylesheet library="css" name="estilo.css"/> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet library="css" name="main.css"></h:outputStylesheet>
+	<link rel="stylesheet" href="resources/assets/css/main.css" />
+</h:head>
+	<h:body>
+		<div id="page-wrapper">
+			<div id="header-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="12u">
+
+							<header id="header">
+								<h1><a href="#" id="logo">Deu vontade de Pizza!</a></h1>
+								<nav id="nav">
+									<a href="publico/usuario.xhtml" class="current-page-item">Homepage</a>
+									<a href="twocolumn1.html">Two Column #1</a>
+									<a href="twocolumn2.html">Two Column #2</a>
+									<a href="onecolumn.html">One Column</a>
+									<a href="threecolumn.html">Three Column</a>
+								</nav>
+							</header>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+			<h:form>
+		<p:panel styleClass="fieldset" id="pnlUsuario" header="Cadastro de usuario">
+			<p:focus context="pnlUsuario"/>
+			<p:messages />
+			<p:fieldset legend="Dados Gerais">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel value="Email: " />
+					<p:inputText id="email" value="#{usuarioBean.usuario.email}" label="Email" required="true" requiredMessage="O campo Email deve ser preenchido!" />
+					<h:outputLabel value="Senha: " />
+					<p:password id="senha" value="#{usuarioBean.usuario.senha}" label="Senha" required="true" requiredMessage="O campo Senha deve ser preenchido!" />
+				</h:panelGrid>
+			</p:fieldset>
+			<p:fieldset id="fdEndereco" legend="Endereço">
+				<h:panelGrid styleClass="panel" columns="6">
+					<h:outputLabel for="nomeFantasia" value="Nome fantasia: " />
+					<p:inputText style="width:500px" id="nomeFantasia" value="#{usuarioBean.usuarioEndereco.nomeFantasia}" label="NomeFantasia"/>
+					<h:column />
+					<h:column />
+					<h:column />
+					<h:column />
+					<h:outputLabel  value="Endereço: " />
+					<p:inputText style="width:500px" id="endereco" value="#{usuarioBean.usuarioEndereco.endereco}" label="Endereço" />
+					
+					<h:outputLabel value="Bairro: " />
+					<p:inputText id="bairro" value="#{usuarioBean.usuarioEndereco.bairro}" label="Bairro" />
+					
+					<h:outputLabel value="Cidade: " />
+					<p:inputText id="cidade" value="#{usuarioBean.usuarioEndereco.municipio}" label="Cidade" />
+					
+					<h:outputLabel value="Estado: " />
+					<p:selectOneMenu id="selectEstado" value="#{usuarioBean.usuarioEndereco.estado}">
+						<f:selectItem itemLabel="Selecione um estado" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{usuarioBean.estados}"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="CEP: " />
+					<p:inputMask id="cep" value="#{usuarioBean.usuarioEndereco.cep}" label="CEP" mask="99999-999" />
+					
+					<h:outputLabel value="Telefone: " />
+					<p:inputMask id="telefone" value="#{usuarioBean.usuarioEndereco.telefone}" label="Telefone" mask="(99) 9999-9999" />
+					
+					<h:outputLabel for="btnAdicionar" value="" />
+					<p:commandButton style="align:right" id="btnAdicionar" value="Adicionar" update="fdEndereco" action="#{usuarioBean.addNaGrid()}" ajax="true"/>
+				</h:panelGrid>
+				<p:dataTable id="dtEndereco" var="endereco" value="#{usuarioBean.enderecosLista}"  >
+				
+					<p:column headerText="Nome fantasia">
+						<h:outputText value="#{endereco.nomeFantasia}" />
+					</p:column>
+					<p:column headerText="Telefone" style="width:150px">
+						<h:outputText value="#{endereco.telefone}" />
+					</p:column>
+					<p:column headerText="Endereço">
+						<h:outputText value="#{endereco.endereco}" />
+					</p:column>
+					<p:column headerText="Municipio">
+						<h:outputText value="#{endereco.municipio}" />
+					</p:column>
+					<p:column headerText="Bairro">
+						<h:outputText value="#{endereco.bairro}" />
+					</p:column>
+					<p:column headerText="Estado" style="width:80px">
+						<h:outputText value="#{endereco.estado}" />
+					</p:column>
+					<p:column headerText="CEP" style="width:100px">
+						<h:outputText value="#{endereco.cep}" />
+					</p:column>
+					<p:column headerText="" style="width:10px">
+						<p:commandLink action="#{usuarioBean.removerDoGrid(endereco)}" update="@parent:@parent:@parent:fdEndereco" disabled="#{usuarioBean.temCardapio(endereco)}">
+							<h:graphicImage library="image" name="remover.png"/>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<p:commandButton value="Salvar" ajax="false" action="#{usuarioBean.salvar()}" icon="ui-icon-disk" validateClient="true" />
+			<p:commandButton value="Cancelar" action="/restrito/painelControle.jsf?faces-redirect=true" icon="ui-icon-closethick" ajax="false" immediate="true" />
+		</p:panel>
+	</h:form>
+		
+		
+		
+		<!-- Scripts -->
+			<script src="resources/sassets/js/jquery.min.js"></script>
+			<script src="resources/assets/js/skel.min.js"></script>
+			<script src="resources/assets/js/skel-viewport.min.js"></script>
+			<script src="resources/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="resources/assets/js/main.js"></script>
+
+	</h:body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<h:head>
+	<title>Cadastro de cardápio - Deu vontade de pizza!</title>
+	<ui:include src="/cabecalho.xhtml" />
+	<h:outputStylesheet library="css" name="estilo.css"/>
+</h:head>
+<h:body>
+	<h:form id="fCardapio" acceptcharset="ISO-8859-1" styleClass="fieldset">
+		<p:dialog header="Area restrita" widgetVar="dlg" visible="#{empty cardapioBean.enderecoSelecionado}" resizable="false" draggable="false" modal="true" closable="false">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="selectEndereco" value="Endereço: " />
+				<p:selectOneMenu id="selectEndereco" value="#{cardapioBean.enderecoSelecionado}">
+					<f:selectItems value="#{cardapioBean.enderecos}"/>
+				</p:selectOneMenu>
+				<p:commandButton id="btnContinuar" value="Continuar" update="pCardapio" ajax="false" action="#{cardapioBean.carregarCardapio()}" onclick="PF('dlg').hide()"/>
+			</h:panelGrid>
+		</p:dialog>
+		<p:panel header="Cadastro de cardápio" id="pCardapio">
+			<p:messages />
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel value="Endereço:" />
+				<h:outputLabel value="#{cardapioBean.enderecoSelecionado}" />
+				<h:outputLabel for="nomeCardapio" value="Título:" />
+				<p:inputText id="nomeCardapio" value="#{cardapioBean.cardapio.nomeCardapio}" label="Titulo" />
+			</h:panelGrid>
+			<br/>
+			<p:fieldset legend="Itens" id="fdCardapio">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel value="Codigo: " />
+					<p:inputText id="codigoProduto" value="#{cardapioBean.produtoAtual.codigoProduto}" label="Código" />
+					<h:outputLabel for="descricaoProduto" value="Descrição: "/>
+					<p:inputText id="descricaoProduto" value="#{cardapioBean.produtoAtual.descricao}" label="DescricaoProduto" style="width:350px"/>
+					<h:outputLabel for="precoProduto" value="Ingredientes: " />
+					<p:inputText id="ingredientesProduto" value="#{cardapioBean.produtoAtual.ingredientes}" label="Ingredientes" style="width:500px"  />
+
+					<h:outputLabel for="precoProduto" value="Preço: " />
+					<p:inputText id="precoProduto" value="#{cardapioBean.produtoAtual.preco}" label="Preço" requiredMessage="O campo Preço deve ser preenchido!" />
+					
+					<h:outputLabel for="btnAdicionar" value="" />
+					<p:commandButton id="btnAdicionar" value="Adicionar" update="pCardapio" action="#{cardapioBean.adicionar()}" ajax="true"/>
+				</h:panelGrid>
+				<h:panelGrid columns="1" id="pgCardapio">
+					<p:dataTable id="dtCardapio" var="produto" value="#{cardapioBean.produtos}">
+						<p:column headerText="Codigo" style="width:120px">
+							<h:outputText value="#{produto.codigoProduto}"/>
+						</p:column>
+						<p:column headerText="Descrição">
+							<h:outputText value="#{produto.descricao}"/>
+						</p:column>
+						<p:column headerText="Ingredientes">
+							<h:outputText value="#{produto.ingredientes}"/>
+						</p:column>
+						<p:column headerText="Preço" style="width:120px">
+							<h:outputText value="#{produto.preco}"/>
+						</p:column>
+						<p:column headerText="" style="width:10px">
+							<p:commandLink action="#{cardapioBean.removerDoGrid(produto)}" update="@parent:@parent:@parent:pCardapio">
+								<h:graphicImage library="image" name="remover.png"/>
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+			</p:fieldset>
+			<br/>
+			<p:commandButton value="Salvar" action="#{cardapioBean.salvar()}" ajax="false" icon="ui-icon-disk" validateClient="true" />
+			<p:commandButton value="Cancelar" action="/restrito/painelControle.xhtml?faces-redirect=true" icon="ui-icon-closethick" ajax="false" immediate="true" />
+		</p:panel>
+	</h:form>
+
+</h:body>
+</html>
