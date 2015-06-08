@@ -31,6 +31,7 @@ public class CatalogoBean {
 	
 	private MapModel geoModel;
     private String centerGeoMap = "41.850033, -87.6500523";
+	private List<ItemCardapio> cardapioSelecionadoItens;
 	
     @PostConstruct
     public void inicializar(){
@@ -92,9 +93,9 @@ public class CatalogoBean {
 	}
 	
 	public String selecionarCardapio(Cardapio cardapio){
-/*		System.out.println(">>> "+cardapio);
+		System.out.println(">>> "+cardapio);
 		this.cardapioSelecionado = cardapio;
-		itensCardapio = DAOFactory.getItemCardapioDAO().listar(cardapioSelecionado);*/
+		this.cardapioSelecionadoItens = DAOFactory.getItemCardapioDAO().listar(cardapioSelecionado);
 		return null;
 	}
 	
@@ -149,5 +150,14 @@ public class CatalogoBean {
     public String getCenterGeoMap() {
         return centerGeoMap;
     }
+
+	public List<ItemCardapio> getCardapioSelecionadoItens() {
+		return cardapioSelecionadoItens;
+	}
+
+	public void setCardapioSelecionadoItens(
+			List<ItemCardapio> cardapioSelecionadoItens) {
+		this.cardapioSelecionadoItens = cardapioSelecionadoItens;
+	}
  
 }

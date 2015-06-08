@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Catálogo de cardápios - Deu vontade de pizza!</title>
+	<ui:include src="/cabecalho.xhtml" />
+</h:head>
+<h:body>
+<div class="tudo">
+	<!--                              CONTEUDO SEMPRE DAQUI                                                                      -->
+	<h:form>
+	<p:imageSwitch effect="shuffle" speed="5000">
+		<ui:repeat value="#{indexBean.images}" var="image">
+			<p:graphicImage value="/resources/image/index/#{image}" />
+		</ui:repeat>
+	</p:imageSwitch>
+	</h:form>
+	<!--                              CONTEUDO SEMPRE ATÉ AQUI                                                                   -->
+	</div>
+	<ui:include src="/rodape.xhtml" />	
+</h:body>
+
+</html>

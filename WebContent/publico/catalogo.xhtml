@@ -8,36 +8,36 @@
 <h:head>
 	<title>Catálogo de cardápios - Deu vontade de pizza!</title>
 	<ui:include src="/cabecalho.xhtml" />
+	<script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+    <script type="text/javascript">
+	    function geocode(endereco) {
+	        PF('geoMap').geocode(endereco);
+	    }
+	</script>
 </h:head>
 <h:body>
 <div class="tudo">
 <!--                              CONTEUDO SEMPRE DAQUI                                                                      -->
 
 
-	<h:form id="frmCatalogo" acceptcharset="ISO-8859-1" style="padding-top:30px;padding-left:30px" styleClass="fieldset">
-		<h:panelGrid columns="4">
-			<p:outputLabel value="Pesquisar: " style="padding-right:8px;" />
-			<p:inputText id="txtPesquisa" value="#{catalogoBean.pesquisa}" style="padding-right:8px;"   />
-			<p:selectOneMenu value="#{catalogoBean.filtroSelecionado}" style="padding-right:8px;" >
-				<f:selectItems value="#{catalogoBean.carregaFiltros()}"/>
-			</p:selectOneMenu>
-			<p:commandButton value="Pesquisar" update="dtItens" action="#{catalogoBean.pesquisaCardapio()}" icon="ui-icon-search" style="padding-right:8px;" />
-		</h:panelGrid>
-	<br />
-	<br />
+	<h:form id="frmCatalogo" acceptcharset="ISO-8859-1" styleClass="fieldset" style="padding-top:10px">
+		
+		<p:fieldset>
+			<h:panelGrid columns="4">
+				<p:outputLabel value="Pesquisar: " />
+				<p:inputText id="txtPesquisa" value="#{catalogoBean.pesquisa}" />
+				<p:selectOneMenu value="#{catalogoBean.filtroSelecionado}" >
+					<f:selectItems value="#{catalogoBean.carregaFiltros()}"/>
+				</p:selectOneMenu>
+				<p:commandButton value="Pesquisar" update="dtItens" action="#{catalogoBean.pesquisaCardapio()}" icon="ui-icon-search" />
+			</h:panelGrid>
+		</p:fieldset>
+		<br />
+		<br />
 	
-	<!-- p:dataList id="dtCatalogo" value="#{catalogoBean.lista}" var="cardapio" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
-       <f:facet name="header">
-           Pesquisa
-       </f:facet>
-       <p:commandLink action="#{catalogoBean.selecionarCardapio(cardapio)}" update="@parent:@parent:cardapioDetalhe" onmouseover="PF('dlgCardapio').show()" title="+ Detalhes" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
-           <f:setPropertyActionListener value="#{cardapio}" target="#{catalogoBean.cardapioSelecionado}" />
-       </p:commandLink>
-       <h:outputText value="#{cardapio.endereco.nomeFantasia} - #{cardapio.endereco.endereco}" style="display:inline-block"/>
-  	</p:dataList -->
-
 		<p:dataTable id="dtItens" var="item"
-			value="#{catalogoBean.itensCardapio}">
+			value="#{catalogoBean.itensCardapio}" >
 			<p:column headerText="Descrição">
 				<h:outputText value="#{item.descricao}" />
 			</p:column>
@@ -51,7 +51,10 @@
 			</p:column>
 			<p:column headerText="Estabelecimento">
 				<h:outputText value="#{item.cardapio.endereco.nomeFantasia}" />
-				<p:commandLink value=" [+ detalhes]" onmouseover="PF('dlgMapa').show()" />
+				<p:commandLink 	value=" [+]" 
+								update="@form:cardapioDetalhe" 
+								action="#{catalogoBean.selecionarCardapio(item.cardapio)}" 
+								onclick="geocode('#{item.cardapio.endereco.endereco}, #{item.cardapio.endereco.municipio}')" oncomplete="PF('dlgCardapio').show()" />
 			</p:column>
 			<p:column headerText="Telefone" >
 				<h:outputText value="#{item.cardapio.endereco.telefone}" />
@@ -59,44 +62,57 @@
 			<p:column headerText="Bairro" >
 				<h:outputText value="#{item.cardapio.endereco.bairro}" />
 			</p:column>
-			<!--p:column>
-				<p:commandLink onmouseover="PF('dlgCardapio').show()">
-					<h:graphicImage library="image" name="map.png"/>
-				</p:commandLink>
-			</p:column -->
 		</p:dataTable>
 
-		<p:dialog widgetVar="dlgCardapio" header="Detalhes do cardápio" modal="true" resizable="false" draggable="false">
-  		<p:outputPanel id="cardapioDetalhe" style="text-align:center;">
-            <h2><h:outputText value="#{catalogoBean.cardapioSelecionado.endereco.nomeFantasia}" /></h2>
-            <p:commandLink id="lnkEndereco" name="lnkEndereco" value="#{catalogoBean.cardapioSelecionado.endereco.endereco}" onclick="geocode('#{catalogoBean.cardapioSelecionado.endereco.endereco}, #{catalogoBean.cardapioSelecionado.endereco.municipio}')" oncomplete="PF('dlgMapa').show()"/>
-            <br/>
-            <!-- p:dataTable id="dtItens" var="item" value="#{catalogoBean.itensCardapio}"  style="width">
-				<p:column headerText="Descrição">
-					<h:outputText value="#{item.descricao}"/>
-				</p:column>
-				<p:column headerText="Ingredientes">
-					<h:outputText value="#{item.ingredientes}"/>
-				</p:column>
-				<p:column headerText="Preço">
-					<h:outputText value="#{item.preco}"/>
-				</p:column>
-			</p:dataTable -->
-        </p:outputPanel>
-  	</p:dialog>
+		<p:dialog id="dlgCardapio" widgetVar="dlgCardapio" header="Detalhes do cardápio" modal="true" resizable="false" draggable="false">
+	  		<p:outputPanel id="cardapioDetalhe" style="text-align:center;">
+	            <p:layout style="width:800px;height:400px;">
+				    <p:layoutUnit position="west" size="50%">
+				        <h3><h:outputText value="#{catalogoBean.cardapioSelecionado.endereco.nomeFantasia}" /></h3>
+				        <p:panelGrid columns="2">
+				        	<h:outputLabel value="Telefone:" />
+				        	<h:outputText value="#{catalogoBean.cardapioSelecionado.endereco.telefone}" />
+				        	<h:outputLabel value="Endereço:" />
+				        	<h:outputText value="#{catalogoBean.cardapioSelecionado.endereco.endereco}, #{catalogoBean.cardapioSelecionado.endereco.municipio} - #{catalogoBean.cardapioSelecionado.endereco.estado}" />
+				        </p:panelGrid>
+				    </p:layoutUnit>
+				    <p:layoutUnit position="center">
+				        <f:view contentType="text/html">
+					        <p:gmap id="geoGmap" widgetVar="geoMap" center="#{catalogoBean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{catalogoBean.geoModel}" style="width:100%;height:100%">
+						        <p:ajax event="geocode" listener="#{catalogoBean.onGeocode}" update="@this" />
+						    </p:gmap>
+					    </f:view>
+				    </p:layoutUnit>
+				    <p:layoutUnit position="south">
+				    	<p:dataTable id="dtItensCardapio" var="item" value="#{catalogoBean.cardapioSelecionadoItens}" >
+							<p:column headerText="Descrição">
+								<h:outputText value="#{item.descricao}" />
+							</p:column>
+							<p:column headerText="Ingredientes">
+								<h:outputText value="#{item.ingredientes}" />
+							</p:column>
+							<p:column headerText="Preço" sortBy="#{item.preco}">
+								<h:outputText value="#{item.preco}">
+								<f:convertNumber currencyCode="BRL" type="currency" minFractionDigits="2"/>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+				    </p:layoutUnit>
+				</p:layout>
+	        </p:outputPanel>
+	  	</p:dialog>
   	
-  	<p:dialog id="gmapDialog" widgetVar="dlgMapa" width="625" height="400" modal="true" resizable="false" draggable="false" header="#{catalogoBean.cardapioSelecionado.endereco}">
-	    <f:view contentType="text/html">
-	        <p:gmap id="geoGmap" widgetVar="geoMap" center="#{catalogoBean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{catalogoBean.geoModel}" style="width:100%;height:400px">
-		        <p:ajax event="geocode" listener="#{catalogoBean.onGeocode}" update="@this" />
-		    </p:gmap>
-	    </f:view>
-	</p:dialog>	
+	  	<p:dialog id="gmapDialogzzz" widgetVar="dlgMapazzz" width="625" height="400" modal="true" resizable="false" draggable="false" header="#{catalogoBean.cardapioSelecionado.endereco}">
+		    <f:view contentType="text/html">
+		        <p:gmap id="geoGmapzzz" widgetVar="geoMapzzz" center="#{catalogoBean.centerGeoMap}" zoom="15" type="ROADMAP" model="#{catalogoBean.geoModel}" style="width:100%;height:400px">
+			        <p:ajax event="geocode" listener="#{catalogoBean.onGeocode}" update="@this" />
+			    </p:gmap>
+		    </f:view>
+		</p:dialog>	
 	</h:form>
-	
 	<!--                              CONTEUDO SEMPRE ATÉ AQUI                                                                   -->
-	<ui:include src="/rodape.xhtml" />
-</div>
+	</div>
+	<ui:include src="/rodape.xhtml" />	
 </h:body>
 
 </html>
