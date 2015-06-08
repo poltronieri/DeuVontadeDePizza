@@ -10,34 +10,12 @@
 	<title>Cadastro de usuário - Deu vontade de pizza!</title>
 	<!-- <h:outputStylesheet library="css" name="estilo.css"/> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<h:outputStylesheet library="css" name="main.css"></h:outputStylesheet>
-	<link rel="stylesheet" href="resources/assets/css/main.css" />
+	<h:outputStylesheet library="css" name="estilo.css" />
+	<ui:include src="/cabecalho.xhtml" />
 </h:head>
 	<h:body>
-		<div id="page-wrapper">
-			<div id="header-wrapper">
-				<div class="container">
-					<div class="row">
-						<div class="12u">
-
-							<header id="header">
-								<h1><a href="#" id="logo">Deu vontade de Pizza!</a></h1>
-								<nav id="nav">
-									<a href="publico/usuario.xhtml" class="current-page-item">Homepage</a>
-									<a href="twocolumn1.html">Two Column #1</a>
-									<a href="twocolumn2.html">Two Column #2</a>
-									<a href="onecolumn.html">One Column</a>
-									<a href="threecolumn.html">Three Column</a>
-								</nav>
-							</header>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-			<h:form>
+	<div class="tudo">
+	<h:form>
 		<p:panel styleClass="fieldset" id="pnlUsuario" header="Cadastro de usuario">
 			<p:focus context="pnlUsuario"/>
 			<p:messages />
@@ -115,16 +93,7 @@
 			<p:commandButton value="Cancelar" action="/restrito/painelControle.jsf?faces-redirect=true" icon="ui-icon-closethick" ajax="false" immediate="true" />
 		</p:panel>
 	</h:form>
-		
-		
-		
-		<!-- Scripts -->
-			<script src="resources/sassets/js/jquery.min.js"></script>
-			<script src="resources/assets/js/skel.min.js"></script>
-			<script src="resources/assets/js/skel-viewport.min.js"></script>
-			<script src="resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="resources/assets/js/main.js"></script>
-
+	<ui:include src="/rodape.xhtml" />
+	</div>
 	</h:body>
 </html>

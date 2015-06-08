@@ -1,12 +1,88 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"> 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:body>
-	<h:panelGroup layout="block" style="position:absolute">
-		<h:graphicImage value="/resources/image/index/cabecalho.png" style="align:center;"/>
-	</h:panelGroup>		
+	<h:head>
+		<title>Deu vontade de pizza!</title>
+		<meta charset="utf-8" />
+		<meta name = "format-detection" content = "telephone=no" />
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+		<h:outputStylesheet library="css" name="grid.css"/>
+		<h:outputStylesheet library="css" name="style.css"/>
+		<h:outputStylesheet library="css" name="estilo.css"/>
+	</h:head>
+<h:body class="index-1">
+<header id="header">
+	<div id="stuck_container">
+		<div class="container">
+			<div class="row">
+				<div class="grid_12">
+					<h1>
+						<h:graphicImage value="/resources/image/pizza.png" width="70px" height="70px" />
+						<!-- a href="index.html">Deu vontade de pizza!</a><span>Seu portal de cardápios.</span -->
+						<a href="index.html">Deu vontade de pizza!</a>
+					</h1>
+					<nav>
+						<ul class="sf-menu">
+							<li class="current"><a href="../index.jsf">Home</a></li>
+							<li><a href="../publico/catalogo.jsf">Cardápios</a></li>
+							<li><a onclick="PF('dlg').show()" >Area restrita</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+
+<!--                              CONTEUDO SEMPRE DAQUI                                                                      -->
+
+
+
+<form id="login" method="post"
+		action="#{request.contextPath}/j_spring_security_check">
+		<p:dialog header="Area restrita" widgetVar="dlg"
+			visible="#{!empty param.login_error}" resizable="false"
+			closable="false" showEffect="blind">
+			<br />
+			<div style="width: 100%">
+				<table style="width: 100%">
+					<tr>
+						<td>Login</td>
+						<td><input type="text" name="j_username" maxlength="25"
+							style="width: 100%" /></td>
+					</tr>
+					<tr>
+						<td>Senha</td>
+						<td><input type="password" name="j_password" maxlength="25"
+							style="width: 100%" /></td>
+					</tr>
+					<tr>
+						<td align="right"><input type="checkbox"
+							name="_spring_security_remember_me" /></td>
+						<td>Entrar automaticamente</td>
+					</tr>
+					<tr align="left">
+						<td></td>
+						<td><a href="publico/usuario.jsf" style="align: left;font-size: 12px">Ainda não é cadastrado? Clique aqui.</a> </td>
+					</tr>
+					<tr align="right">
+						<td></td>
+						<td></td>
+						<td><input type="submit" value="Entrar" /></td>
+					</tr>
+				</table>
+				<script>
+					document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+				</script>
+			</div>
+			<h:panelGroup rendered="#{!empty param.login_error}" layout="block">
+				<p:outputLabel style="color:red;font-size:11px"
+					value="Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}" />
+			</h:panelGroup>
+		</p:dialog>
+	</form>
 </h:body> 
 </html>

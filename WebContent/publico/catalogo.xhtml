@@ -8,24 +8,20 @@
 <h:head>
 	<title>Catálogo de cardápios - Deu vontade de pizza!</title>
 	<ui:include src="/cabecalho.xhtml" />
-	<h:outputStylesheet library="css" name="estilo.css"/>
-	<script src="http://maps.google.com/maps/api/js?sensor=false" 
-          type="text/javascript"></script>
-    <script type="text/javascript">
-	    function geocode(endereco) {
-	        PF('geoMap').geocode(endereco);
-	    }
-	</script>
 </h:head>
 <h:body>
-	<h:form id="frmCatalogo" acceptcharset="ISO-8859-1" styleClass="fieldset">
+<div class="tudo">
+<!--                              CONTEUDO SEMPRE DAQUI                                                                      -->
+
+
+	<h:form id="frmCatalogo" acceptcharset="ISO-8859-1" style="padding-top:30px;padding-left:30px" styleClass="fieldset">
 		<h:panelGrid columns="4">
-			<p:outputLabel value="Pesquisar: "/>
-			<p:inputText id="txtPesquisa" value="#{catalogoBean.pesquisa}"  />
-			<p:selectOneMenu value="#{catalogoBean.filtroSelecionado}">
+			<p:outputLabel value="Pesquisar: " style="padding-right:8px;" />
+			<p:inputText id="txtPesquisa" value="#{catalogoBean.pesquisa}" style="padding-right:8px;"   />
+			<p:selectOneMenu value="#{catalogoBean.filtroSelecionado}" style="padding-right:8px;" >
 				<f:selectItems value="#{catalogoBean.carregaFiltros()}"/>
 			</p:selectOneMenu>
-			<p:commandButton value="Pesquisar" update="dtItens" action="#{catalogoBean.pesquisaCardapio()}" icon="ui-icon-search"/>
+			<p:commandButton value="Pesquisar" update="dtItens" action="#{catalogoBean.pesquisaCardapio()}" icon="ui-icon-search" style="padding-right:8px;" />
 		</h:panelGrid>
 	<br />
 	<br />
@@ -48,7 +44,7 @@
 			<p:column headerText="Ingredientes">
 				<h:outputText value="#{item.ingredientes}" />
 			</p:column>
-			<p:column headerText="Preço" sortBy="#{item.preco}" style="width:100px">
+			<p:column headerText="Preço" sortBy="#{item.preco}">
 				<h:outputText value="#{item.preco}">
 				<f:convertNumber currencyCode="BRL" type="currency" minFractionDigits="2"/>
 				</h:outputText>
@@ -57,10 +53,10 @@
 				<h:outputText value="#{item.cardapio.endereco.nomeFantasia}" />
 				<p:commandLink value=" [+ detalhes]" onmouseover="PF('dlgMapa').show()" />
 			</p:column>
-			<p:column headerText="Telefone" style="width:150px">
+			<p:column headerText="Telefone" >
 				<h:outputText value="#{item.cardapio.endereco.telefone}" />
 			</p:column>
-			<p:column headerText="Bairro" style="width:200px">
+			<p:column headerText="Bairro" >
 				<h:outputText value="#{item.cardapio.endereco.bairro}" />
 			</p:column>
 			<!--p:column>
@@ -95,8 +91,12 @@
 		        <p:ajax event="geocode" listener="#{catalogoBean.onGeocode}" update="@this" />
 		    </p:gmap>
 	    </f:view>
-	</p:dialog>
-  	
+	</p:dialog>	
 	</h:form>
+	
+	<!--                              CONTEUDO SEMPRE ATÉ AQUI                                                                   -->
+	<ui:include src="/rodape.xhtml" />
+</div>
 </h:body>
+
 </html>

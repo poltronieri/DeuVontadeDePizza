@@ -5,45 +5,96 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:head>
-		<title>Minimaxing by HTML5 UP</title>
+		<title>Deu vontade de pizza!</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="resources/assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<meta name = "format-detection" content = "telephone=no" />
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+		<h:outputStylesheet library="css" name="grid.css"/>
+		<h:outputStylesheet library="css" name="style.css"/>
+		<h:outputStylesheet library="css" name="estilo.css"/>
 	</h:head>
-	<h:body>
-		<div id="page-wrapper">
-			<div id="header-wrapper">
-				<div class="container">
-					<div class="row">
-						<div class="12u">
-
-							<header id="header">
-								<h1><a href="#" id="logo">Deu vontade de Pizza!</a></h1>
-								<nav id="nav">
-									<a href="publico/usuario.xhtml" class="current-page-item">Homepage</a>
-									<a href="twocolumn1.html">Two Column #1</a>
-									<a href="twocolumn2.html">Two Column #2</a>
-									<a href="onecolumn.html">One Column</a>
-									<a href="threecolumn.html">Three Column</a>
-								</nav>
-							</header>
-
-						</div>
-					</div>
+<h:body class="index-1">
+<!--==============================header=================================-->
+<header id="header">
+	<div id="stuck_container">
+		<div class="container">
+			<div class="row">
+				<div class="grid_12">
+					<h1><a href="index.html">Deu vontade de pizza!</a><span>Seu portal de cardápios.</span></h1>
+					<nav>
+						<ul class="sf-menu">
+							<li class="current"><a href="index.jsf">Home</a></li>
+							<li><a href="publico/catalogo.jsf">Cardápios</a></li>
+							<li><a onclick="PF('dlg').show()" >Area restrita</a></li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>
-		<!-- Scripts -->
-			<script src="resources/sassets/js/jquery.min.js"></script>
-			<script src="resources/assets/js/skel.min.js"></script>
-			<script src="resources/assets/js/skel-viewport.min.js"></script>
-			<script src="resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="resources/assets/js/main.js"></script>
+	</div>
+</header>
 
-	</h:body>
+<!--                              CONTEUDO SEMPRE DAQUI                                                                      -->
 
+
+
+<form id="login" method="post"
+		action="#{request.contextPath}/j_spring_security_check">
+		<p:dialog header="Area restrita" widgetVar="dlg"
+			visible="#{!empty param.login_error}" resizable="false"
+			closable="false" showEffect="blind">
+			<br />
+			<div style="width: 100%">
+				<table style="width: 100%">
+					<tr>
+						<td>Login</td>
+						<td><input type="text" name="j_username" maxlength="25"
+							style="width: 100%" /></td>
+					</tr>
+					<tr>
+						<td>Senha</td>
+						<td><input type="password" name="j_password" maxlength="25"
+							style="width: 100%" /></td>
+					</tr>
+					<tr>
+						<td align="right"><input type="checkbox"
+							name="_spring_security_remember_me" /></td>
+						<td>Entrar automaticamente</td>
+					</tr>
+					<tr align="left">
+						<td></td>
+						<td><a href="publico/usuario.jsf" style="align: left;font-size: 12px">Ainda não é cadastrado? Clique aqui.</a> </td>
+					</tr>
+					<tr align="right">
+						<td></td>
+						<td></td>
+						<td><input type="submit" value="Entrar" /></td>
+					</tr>
+				</table>
+				<script>
+					document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+				</script>
+			</div>
+			<h:panelGroup rendered="#{!empty param.login_error}" layout="block">
+				<p:outputLabel style="color:red;font-size:11px"
+					value="Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}" />
+			</h:panelGroup>
+		</p:dialog>
+	</form>
+
+<!--                              CONTEUDO SEMPRE ATÉ AQUI                                                                   -->
+<div class="rodape">
+	<footer id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="grid_12 copyright">
+					<pre>Deu vontade de pizza!© <span id="copyright-year">2015</span> |  Privacy Policy</pre>
+				</div>
+			</div>
+		</div>
+		<div class="footer_bottom"><a href="http://www.templatemonster.com/" rel="nofollow"><img src="images/footer-logo.png" alt="logo" /></a></div>
+	</footer>
+</div>
+</h:body>
 
 </html>

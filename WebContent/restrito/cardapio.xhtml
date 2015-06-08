@@ -11,6 +11,7 @@
 	<h:outputStylesheet library="css" name="estilo.css"/>
 </h:head>
 <h:body>
+<div class="tudo">
 	<h:form id="fCardapio" acceptcharset="ISO-8859-1" styleClass="fieldset">
 		<p:dialog header="Area restrita" widgetVar="dlg" visible="#{empty cardapioBean.enderecoSelecionado}" resizable="false" draggable="false" modal="true" closable="false">
 			<h:panelGrid columns="2" cellpadding="5">
@@ -72,6 +73,7 @@
 			<p:commandButton value="Cancelar" action="/restrito/painelControle.xhtml?faces-redirect=true" icon="ui-icon-closethick" ajax="false" immediate="true" />
 		</p:panel>
 	</h:form>
-
+<ui:include src="/rodape.xhtml" />
+</div>
 </h:body>
 </html>
