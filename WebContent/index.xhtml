@@ -6,16 +6,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title>Catálogo de cardápios - Deu vontade de pizza!</title>
+	<title>Bem vindo - Deu vontade de pizza!</title>
 	<ui:include src="/cabecalho.xhtml" />
 </h:head>
 <h:body>
 <div class="tudo">
 	<!--                              CONTEUDO SEMPRE DAQUI                                                                      -->
-	<h:form>
-	<p:imageSwitch effect="shuffle" speed="5000">
+	<h:form style="padding-left:38%;padding-top:5%">
+	<p:outputLabel value="Bem vindo ao portal número 1 em cardapios!" styleClass="titulo" />
+	<p:imageSwitch effect="shuffle">
 		<ui:repeat value="#{indexBean.images}" var="image">
-			<p:graphicImage value="/resources/image/index/#{image}" />
+			<p:graphicImage width="300" height="300" value="/resources/image/index/#{image}" />
 		</ui:repeat>
 	</p:imageSwitch>
 	</h:form>

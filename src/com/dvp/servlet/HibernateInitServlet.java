@@ -1,8 +1,6 @@
 package com.dvp.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -11,18 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dvp.dao.CardapioDAO;
-import com.dvp.dao.DAOFactory;
-import com.dvp.dao.UsuarioDAO;
-import com.dvp.model.Cardapio;
-import com.dvp.model.ItemCardapio;
-import com.dvp.model.Usuario;
 import com.dvp.util.HibernateUtil;
 
 /**
  * Servlet implementation class HibernateInitServlet
  */
-public class HibernateInitServlet extends HttpServlet {
+public class HibernateInitServlet extends HttpServlet {	
 	private static final long serialVersionUID = 1L;
 
     /**

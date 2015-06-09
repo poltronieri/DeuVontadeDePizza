@@ -14,6 +14,7 @@
 	</h:head>
 <h:body class="index-1">
 <header id="header">
+	<h:form>
 	<div id="stuck_container">
 		<div class="container">
 			<div class="row">
@@ -21,12 +22,12 @@
 					<h1>
 						<h:graphicImage value="/resources/image/pizza.png" width="70px" height="70px" />
 						<!-- a href="index.html">Deu vontade de pizza!</a><span>Seu portal de cardápios.</span -->
-						<a href="index.html">Deu vontade de pizza!</a>
+						<a href="../index.jsf">Deu vontade de pizza!</a>
 					</h1>
 					<nav>
 						<ul class="sf-menu">
-							<li class="current"><a href="../index.jsf">Home</a></li>
-							<li><a href="../publico/catalogo.jsf">Cardápios</a></li>
+							<li><p:commandLink value="Home" action="/index.jsf?faces-redirect=true"  ajax="false"/></li>
+							<li><p:commandLink value="Cardápios" action="/publico/catalogo.jsf?faces-redirect=true"  ajax="false"/></li>
 							<li><a onclick="PF('dlg').show()" >Area restrita</a></li>
 						</ul>
 					</nav>
@@ -34,6 +35,7 @@
 			</div>
 		</div>
 	</div>
+	</h:form>
 </header>
 
 
